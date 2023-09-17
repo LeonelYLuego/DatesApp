@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatesApp.Controllers
 {
-    [ApiController]
-    [Route("Api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
 

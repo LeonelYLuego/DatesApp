@@ -46,7 +46,7 @@ namespace DatesApp.Controllers
         [HttpPost("LogIn")]
         public async Task<ActionResult<UserDto>> LogIn(LogInDto loginDto)
         {
-            var user = await _context.Users.SingleAsync(x => x.Username == loginDto.Username);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == loginDto.Username);
             if (user == null) return Unauthorized();
 
             using var hmac = new HMACSHA512(user.PasswordSalt);

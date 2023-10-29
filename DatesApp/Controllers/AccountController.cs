@@ -28,9 +28,16 @@ namespace DatesApp.Controllers
             var user = new User
             {
                 Username = registerDto.Username,
-                Email = registerDto.Email,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
+                DateOfBirth = registerDto.DateOfBirth,
+                KnownAs = registerDto.KnownAs,
+                Gender = registerDto.Gender,
+                Introduction = registerDto.Introduction,
+                LookingFor = registerDto.LookingFor,
+                Interests = registerDto.Interests,
+                City = registerDto.City,
+                Country = registerDto.Country,
             };
 
             _context.Users.Add(user);
@@ -49,12 +56,12 @@ namespace DatesApp.Controllers
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == loginDto.Username);
             if (user == null) return Unauthorized();
 
-            using var hmac = new HMACSHA512(user.PasswordSalt);
+            using var hmac = new HMACSHA512(user.PasswordSalt!);
 
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
             for (int i = 0; i < computedHash.Length; i++)
             {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized();
+                if (computedHash[i] != user.PasswordHash![i]) return Unauthorized();
             }
 
             return new UserDto

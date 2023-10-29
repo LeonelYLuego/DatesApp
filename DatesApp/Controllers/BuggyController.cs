@@ -37,8 +37,8 @@ namespace DatesApp.Controllers
             try
             {
                 var thing = _context.Users.Find(-1);
-                var thingToReturn = thing.ToString();
-                return thingToReturn;
+                var thingToReturn = thing!.ToString();
+                return thingToReturn!;
             } catch
             {
                 return StatusCode(500, "Algo salió mal");

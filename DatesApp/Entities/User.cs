@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DatesApp.Extensions;
 
 namespace DatesApp.Entities
 {
@@ -8,10 +8,35 @@ namespace DatesApp.Entities
 
         public required string Username { get; set; }
 
-        public required string Email { get; set; }
+        public byte[]? PasswordHash { get; set; }
 
-        public required byte[] PasswordHash { get; set; }
+        public byte[]? PasswordSalt { get; set; }
 
-        public required byte[] PasswordSalt { get; set; }
+        public DateOnly DateOfBirth { get; set; }
+
+        public required string KnownAs { get; set; }
+
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+
+        public DateTime LastActive { get; set; } = DateTime.UtcNow;
+
+        public required string Gender { get; set; }
+
+        public required string Introduction { get; set; }
+
+        public required string LookingFor { get; set; }
+
+        public required string Interests { get; set; }
+
+        public required string City { get; set; }
+
+        public required string Country { get; set; }
+
+        // public List<Photo> Photos { get; set; } = new List<Photo>();
+
+        public int GetAge()
+        {
+            return DateOfBirth.CalculateAge();
+        }
     }
 }

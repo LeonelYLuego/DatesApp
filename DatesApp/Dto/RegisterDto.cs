@@ -10,11 +10,30 @@ namespace DatesApp.Dto
 
         [Required]
         [MaxLength(128)]
-        [EmailAddress]
-        public required string Email { get; set; }
+        public required string Password { get; set; }
 
         [Required]
-        [MaxLength(128)]
-        public required string Password { get; set; }
+        public DateOnly DateOfBirth { get; set; }
+
+        [Required]
+        public required string KnownAs { get; set; }
+
+        [Required]
+        public required string Gender { get; set; }
+
+        [Required]
+        public required string Introduction { get; set; }
+
+        [Required]
+        public required string LookingFor { get; set; }
+
+        [Required]
+        public required string Interests { get; set; }
+
+        [Required]
+        public required string City { get; set; }
+
+        [Required]
+        public required string Country { get; set; }
     }
 }

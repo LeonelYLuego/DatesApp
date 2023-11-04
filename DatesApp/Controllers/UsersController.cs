@@ -1,32 +1,34 @@
-﻿using DatesApp.Data;
+﻿using AutoMapper;
+using DatesApp.Dto;
 using DatesApp.Entities;
-using Microsoft.AspNetCore.Authorization;
+using DatesApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DatesApp.Controllers
 {
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IUsersRepository _usersRepository;
+        private readonly IMapper _mapper;
 
-        public UsersController(DataContext context)
+        public UsersController(IUsersRepository usersRepository, IMapper mapper)
         {
-            _context = context;
+            _usersRepository = usersRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        // [Authorize]
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<MemberDto>>(await _usersRepository.GetUsersAsync()));
         }
 
-        [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<User?>> GetUser(int id)
+        [HttpGet("{username}")]
+        // [Authorize]
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            return await _context.Users.FindAsync(id);
+            return Ok(_mapper.Map<MemberDto>(await _usersRepository.GetUserByUsernameAsync(username)));
         }
     }
 }

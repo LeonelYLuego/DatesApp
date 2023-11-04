@@ -1,18 +1,16 @@
-﻿using DatesApp.Extensions;
+﻿using DatesApp.Entities;
 
-namespace DatesApp.Entities
+namespace DatesApp.Dto
 {
-    public class User
+    public class MemberDto
     {
         public int Id { get; set; }
 
         public required string Username { get; set; }
 
-        public byte[]? PasswordHash { get; set; }
+        public required string PhotoUrl { get; set; }
 
-        public byte[]? PasswordSalt { get; set; }
-
-        public DateOnly DateOfBirth { get; set; }
+        public int Age { get; set; }
 
         public required string KnownAs { get; set; }
 
@@ -32,11 +30,6 @@ namespace DatesApp.Entities
 
         public required string Country { get; set; }
 
-        public List<Photo> Photos { get; set; } = new ();
-
-        public int GetAge()
-        {
-            return DateOfBirth.CalculateAge();
-        }
+        // public List<PhotoDto> Photos { get; set; } = new();
     }
 }

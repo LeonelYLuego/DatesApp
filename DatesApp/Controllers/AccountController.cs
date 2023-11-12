@@ -61,6 +61,8 @@ namespace DatesApp.Controllers
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
             for (int i = 0; i < computedHash.Length; i++)
             {
+                Console.WriteLine(computedHash[i]);
+                Console.WriteLine(user.PasswordHash[i]);
                 if (computedHash[i] != user.PasswordHash![i]) return Unauthorized();
             }
 

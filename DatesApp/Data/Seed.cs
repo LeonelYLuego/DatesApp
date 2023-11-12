@@ -1,6 +1,5 @@
 ﻿using DatesApp.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -19,16 +18,11 @@ namespace DatesApp.Data
 
             foreach (var user in users!)
             {
-                using (var hmac = new HMACSHA512())
-                {
-                    user.PasswordSalt = new byte[64];
-                    using (var rng = RandomNumberGenerator.Create())
-                    {
-                        rng.GetBytes(user.PasswordSalt);
-                    }
+                using var hmac = new HMACSHA512();
 
-                    user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("password"));
-                }
+                user.Username = user.Username.ToLower();
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("password"));
+                user.PasswordSalt = hmac.Key;
 
                 context.Users.Add(user);
             }
